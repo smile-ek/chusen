@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>抽選</title>
+
+    <style>
+        .center {
+          text-align: center;
+        }
+        .center * {
+          margin-right: auto;
+          margin-left: auto;
+        }
+
+        /* ボディ内のテキストのスタイルを変更するCSS */
+        body {
+            font-family: 'Arial', sans-serif; /* フォントファミリーを指定 */
+            font-size: 18px; /* フォントサイズを指定 */
+            color: #333; /* テキストの色を指定 */
+            line-height: 1.5; /* 行の高さを指定 */
+        }
+
+        /* "おみくじ" のスタイル */
+        .fortune-text {
+            font-size: 24px; /* フォントサイズを変更 */
+            color: #FF5733; /* テキストの色を変更 */
+        }
+
+        /* "ボタンをクリックしてください" のスタイル */
+        .instruction-text {
+            font-style: italic; /* 斜体にする */
+            color: #009688; /* テキストの色を変更 */
+        }
+
+        #button {
+            background-color: #4CAF50; /* ボタンの背景色 */
+            color: white; /* ボタンのテキスト色 */
+            font-size: 16px; /* ボタンのフォントサイズ */
+            padding: 10px 20px; /* ボタンの内側の余白 */
+            border: none; /* ボーダーをなしにする */
+            cursor: pointer; /* カーソルをポインタにする */
+            border-radius: 5px; /* ボタンの角を丸くする */
+        }
+        </style>
+
+    <script>
+        window.onload = function () {
+
+const list = {
+  "1":5,
+  "2":10,
+  "3":10,
+  "4":20,
+  "5":15,
+  "6":15,
+  "7":25,
+};
+
+var timer;
+// START・STOPボタンクリックのイベント
+document.getElementById("button").onclick = function () {
+  // START
+  if (this.textContent == "START") {
+    // ボタンのテキストを"STOP"に変更
+    this.textContent = "STOP";
+
+    // ルーレットタイマーを設定
+    timer = setInterval(function () {
+      var random = Math.floor(Math.random() * Object.keys(list).length);
+      document.getElementById("img").src = "img/" + Object.keys(list)[random] + ".jpg";
+    }, 50);
+  // STOP
+  } else {
+    // ボタンのテキストを"START"に変更
+    this.textContent = "START";
+
+    // ルーレットタイマーを停止
+    clearInterval(timer);
+
+    var rate = 0;
+    var random = Math.floor(Math.random() * 100);
+    for(var data in list){
+      rate += list[data];
+      if(random <= rate){
+        document.getElementById("img").src = "img/" + data + ".jpg";
+        return;
+      }
+    }
+  }
+};
+};
+      </script>
+</head>
+<body>
+    <div class="center">
+    
+    <div class="wrapper">
+        <p class="fortune-text">おたのしみ抽選</p>
+        <p class="instruction-text">ボタンをクリックしてください</p>
+      <div class="wrapper-button">
+        <button id="button">START</button>
+      </div>
+      <br>
+      <div>
+        <img id="img" src="img/muji.jpg" alt="">
+      </div>
+    </div>
+</div>
+  </body>
+</html>
